@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const connectDB = require('./config/db');
 const colors = require('colors');
 
+const PORT = process.env.PORT || 5000;
+
 // Load env vars
 dotenv.config({ path: './config/config.env'});
 
@@ -14,7 +16,9 @@ connectDB();
 const bootcamps = require('./routes/bootcamp');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+
+// Body parser
+app.use(express.json());
 
 // Middleware
 if(process.env.NODE_ENV === 'development') {

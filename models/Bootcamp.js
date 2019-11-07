@@ -15,8 +15,9 @@ const BootcampSchema = new mongoose.Schema({
         maxlength: [500, 'Name can not be more than 500 characters']
     },
     website: {
+        type: String,
         match: [
-            /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
+            /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/g,
             'Please use a valid URL with http(s)'
         ]
     },
@@ -27,7 +28,7 @@ const BootcampSchema = new mongoose.Schema({
     email: {
         type: String,
         match: [
-            /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/,
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
             'Please add a valid email'
         ]
     },
@@ -36,16 +37,14 @@ const BootcampSchema = new mongoose.Schema({
         required: [true, 'Please add an address']
     },
     location: {
-        // GeoJSON
         type: {
-            type: String,
-            enum: ['Point'],
-            required: true
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
+            required: false
         },
         coordinates: {
             type: [Number],
-            required: true,
-            index: '2dsphere'
+            required: true
         },
         formattedAddress: String,
         street: String,
