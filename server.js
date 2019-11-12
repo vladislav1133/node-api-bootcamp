@@ -23,7 +23,6 @@ if(process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-console.log("---", 'hi');
 // Mount routes
 app.use('/api/v1/bootcamps', bootcamps);
 
