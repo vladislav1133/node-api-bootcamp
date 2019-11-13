@@ -13,9 +13,9 @@ mongoose.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true
 })
     .then(() => {
-        if(process.argv[2] === '-i') {
+        if (process.argv[2] === '-i') {
             importData();
-        } else if(process.argv[2] === '-d') {
+        } else if (process.argv[2] === '-d') {
             deleteData();
         }
     })

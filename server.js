@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const errorHandler = require('./middlewares/error');
 const connectDB = require('./config/db');
 const colors = require('colors');
+const fileupload = require('express-fileupload');
+const path = require('path');
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,13 +18,19 @@ const courses = require('./routes/courses');
 
 const app = express();
 
+// Set static folder
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 // Body parser
 app.use(express.json());
 
 // Middleware
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
+
+// File upload
+app.use(fileupload());
 
 // Mount routes
 app.use('/api/v1/bootcamps', bootcamps);
